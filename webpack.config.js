@@ -13,6 +13,9 @@ module.exports = {
       title: "Weather.app",
       template: "./src/template.html",
     }),
+    new CopyWebpackPlugin({
+      patterns:[{from: './src/imgs', to: './imgs'}]
+    })
   ],
   output: {
     filename: "[name].bundle.js",
