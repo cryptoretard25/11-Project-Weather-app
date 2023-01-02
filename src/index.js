@@ -17,7 +17,7 @@ searchInput.addEventListener('change',(e)=>{
 searchButton.addEventListener('click', async ()=>{
   state.weather = new WeatherData(await requestWeather(state.input, state.units))
   state.forecast = new Forecast(await requestForecast(state.input, state.units));
-  state.daily = fillDaily(state.forecast.forecast.daily)
+  state.forecast.setDaily();
 
   loadDOM(state.forecast, state.weather)
   addDailyDOM(state)
@@ -27,7 +27,9 @@ searchButton.addEventListener('click', async ()=>{
 });
 
 convertButton.addEventListener("click", () => {
+  state.forecast.setConvertedDaily();
   convertUnits(state);
+  addDailyDOM(state);
 });
 
 dailyButton.addEventListener('click', (e)=>{
@@ -44,18 +46,16 @@ hourlyButton.addEventListener('click', (e)=>{
 
 
 // Onload with current user location
-state.input = 'ivanovo';
-//Working API
-//state.input = await requestCurrentLocation();
+state.input = await requestCurrentLocation();
 
 (async ()=>{
   state.weather = new WeatherData(await requestWeather(state.input, state.units))
   state.forecast = new Forecast(await requestForecast(state.input, state.units));
-  state.daily = fillDaily(state.forecast.forecast.daily)
+  state.forecast.setDaily();
+
   loadDOM(state.forecast, state.weather)
   addDailyDOM(state)
-  log(state.daily)
-  log(state.daily[1].getDay())
+  log(state.forecast)
 })()
 
 // const weather = new WeatherData(await requestWeather(state.input, state.units))

@@ -57,7 +57,7 @@ const handle = (target) => {
 
 const addDailyDOM = (state)=>{
   forecastBox.innerHTML = '';
-  const daily = state.daily;
+  const daily = state.forecast.forecast.dailyFiltered;
   for(let i = 1; i<daily.length; i++){
     forecastBox.innerHTML += day(daily[i].getDay(), daily[i].getDate(), daily[i].maxTemp, daily[i].minTemp, daily[i].icon)
   }

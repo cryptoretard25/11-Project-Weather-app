@@ -5,7 +5,10 @@ const apiKey = '3069ae2718e40f8dc1998b7250e16f10'
 
 async function requestCurrentLocation(){
   try{
-  const resolve = await fetch('https://ipapi.co/json/')
+  const resolve = await fetch('https://ipapi.co/json/');
+  if(!resolve.ok){
+    return 'ivanovo'
+  }
   const result = await resolve.json();
   return result.city
   }catch(err){

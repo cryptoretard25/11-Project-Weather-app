@@ -70,11 +70,19 @@ class Forecast {
   setCurrentFeelsLike(val){
     this.forecast.current.feels_like = val
   }
+  setConvertedToday(){
+    utils.convertToday()
+  }
   //DAILY
   /********************************************************************************** */
-  // setDaily(){
-  //   this.forecast.daily = utils.fillDaily(this.forecast.forecast.daily);
-  // }
+  setDaily(){
+    this.forecast.dailyFiltered = utils.fillDaily(this.forecast.daily);
+  }
+
+  setConvertedDaily(){
+    this.forecast.dailyFiltered = utils.convertDaily(this.forecast.dailyFiltered)
+  }
+
 }
 
 export {state, WeatherData, Forecast}

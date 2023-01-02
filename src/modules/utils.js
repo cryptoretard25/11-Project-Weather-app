@@ -1,3 +1,5 @@
+import { state } from "./classes";
+
 function getIcon(code) {
   const codes = {
     "01d": "./imgs/sun.svg",
@@ -112,6 +114,33 @@ function fillDaily(array) {
   });
 }
 
+function convertDaily(array){
+  return array.map((item)=>{
+    return {
+      dt: item.dt,
+      maxTemp: (()=>{
+        if(state.units === 'metric'){
+          return convertToF(item.maxTemp)
+        }
+        if(state.units === 'imperial'){
+          return convertToC(item.maxTemp)
+        }
+      })(),
+      minTemp: (()=>{
+        if(state.units === 'metric'){
+          return convertToF(item.minTemp)
+        }
+        if(state.units === 'imperial'){
+          return convertToC(item.minTemp)
+        }
+      })(),
+      icon: item.icon,
+      getDay: item.getDay,
+      getDate: item.getDate,
+    }
+  })
+}
+
 export {
   getIcon,
   capitalize,
@@ -126,4 +155,5 @@ export {
   convertToMph,
   convertToKmph,
   fillDaily,
+  convertDaily,
 };
