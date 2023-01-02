@@ -141,6 +141,57 @@ function convertDaily(array){
   })
 }
 
+function fillHourly(array){
+  const arr = array.splice(0, 24)
+  const result = [];
+  const temp = arr.map(item=>{
+    return {
+      timezone: state.forecast.forecast.timezone,
+      dt: item.dt,
+      temp: item.temp,
+      icon: item.weather[0].icon,
+      getHour: function(){
+        const date = new Date(1970, 0, 1)
+        date.setSeconds(this.dt);
+        return date.toLocaleTimeString("en-US",{
+          timeZone: this.timezone,
+          hour12: true,
+          hour: 'numeric'
+        })
+      }
+    }
+
+  })
+  while(temp.length){
+    result.push(temp.splice(0,8))
+  }
+  return result
+}
+
+function convertHourly(array){
+  const temp = [];
+  for(let arr of array){
+    temp.push(arr.map((item)=>{
+      return {
+        timezone: item.timezone,
+        dt: item.dt,
+        temp: (()=>{
+          if(state.units === 'metric'){
+            return convertToF(item.temp)
+          }
+          if(state.units === 'imperial'){
+            return convertToC(item.temp)
+          }
+        })(),
+        icon: item.icon,
+        getHour: item.getHour,
+      }
+    }))
+  }
+  return temp;
+ 
+}
+
 export {
   getIcon,
   capitalize,
@@ -156,4 +207,6 @@ export {
   convertToKmph,
   fillDaily,
   convertDaily,
+  fillHourly,
+  convertHourly
 };

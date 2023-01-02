@@ -70,9 +70,6 @@ class Forecast {
   setCurrentFeelsLike(val){
     this.forecast.current.feels_like = val
   }
-  setConvertedToday(){
-    utils.convertToday()
-  }
   //DAILY
   /********************************************************************************** */
   setDaily(){
@@ -83,6 +80,15 @@ class Forecast {
     this.forecast.dailyFiltered = utils.convertDaily(this.forecast.dailyFiltered)
   }
 
+  //HOURLY
+  /********************************************************************************** */
+  setHourly(){
+    this.forecast.hourlyFiltered = utils.fillHourly(this.forecast.hourly)
+  }
+
+  setConvertedHourly(){
+    this.forecast.hourlyFiltered = utils.convertHourly(this.forecast.hourlyFiltered)
+  }
 }
 
 export {state, WeatherData, Forecast}

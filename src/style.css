@@ -189,8 +189,8 @@ input[type=text]:focus{
 .dot{
   position: relative;
   top: -1px;
-  height: 12px;
-  width: 12px;
+  height: 15px;
+  width: 15px;
   border: 2px solid white;
   border-radius: 50%;
   cursor: pointer;

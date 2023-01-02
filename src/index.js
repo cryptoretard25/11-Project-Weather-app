@@ -1,9 +1,8 @@
 import "./style.css";
-import { fillDaily } from "./modules/utils";
 import {requestWeather, requestForecast, requestCurrentLocation } from "./modules/api";
 import {WeatherData, Forecast, state} from './modules/classes'
 import {loadDOM, searchInput, searchButton, convertButton, convertUnits} from './modules/upperdom';
-import { dailyButton, handle, hourlyButton, addDailyDOM } from "./modules/lowerdom";
+import { dailyButton, handle, handleDots, hourlyButton, addDailyDOM, addHourlyDOM, dots } from "./modules/lowerdom";
 
 const { log } = console;
 log("Creating new project");
@@ -18,18 +17,27 @@ searchButton.addEventListener('click', async ()=>{
   state.weather = new WeatherData(await requestWeather(state.input, state.units))
   state.forecast = new Forecast(await requestForecast(state.input, state.units));
   state.forecast.setDaily();
+  state.forecast.setHourly();
 
   loadDOM(state.forecast, state.weather)
   addDailyDOM(state)
-
+  dailyButton.click();
   log(state.daily)
-  log(state.forecast.forecast.daily)
+  
+  log(state.forecast.forecast.hourlyFiltered)
 });
 
 convertButton.addEventListener("click", () => {
   state.forecast.setConvertedDaily();
+  state.forecast.setConvertedHourly();
   convertUnits(state);
-  addDailyDOM(state);
+  if(dailyButton.classList.contains('selected')){
+    addDailyDOM(state);
+  }else{
+    addHourlyDOM(state, 0)
+    dots[0].click();
+  }
+  log(state.forecast)
 });
 
 dailyButton.addEventListener('click', (e)=>{
@@ -42,8 +50,18 @@ hourlyButton.addEventListener('click', (e)=>{
   const target = e.target;
   handle(target)
   log('hourly button clicked')
+  dots[0].click();
 })
 
+dots.forEach(dot=>{
+  dot.addEventListener('click', (e)=>{
+    const target = e.target
+    const index = e.target.dataset.dot;
+    handleDots(target);
+    addHourlyDOM(state, index)
+    log(index)
+  })
+})
 
 // Onload with current user location
 state.input = await requestCurrentLocation();
@@ -52,26 +70,13 @@ state.input = await requestCurrentLocation();
   state.weather = new WeatherData(await requestWeather(state.input, state.units))
   state.forecast = new Forecast(await requestForecast(state.input, state.units));
   state.forecast.setDaily();
+  state.forecast.setHourly();
 
   loadDOM(state.forecast, state.weather)
   addDailyDOM(state)
-  log(state.forecast)
+
+  log(state.forecast.forecast.hourlyFiltered)
+  log(state.forecast.forecast.hourlyFiltered[0][0].getHour())
 })()
 
-// const weather = new WeatherData(await requestWeather(state.input, state.units))
-// const forecast = new Forecast(await requestForecast(state.input, state.units));
-// loadDOM(forecast, weather)
-// log(weather)
-// log(forecast)
-// log('---------------LEFT-BAR--------------------')
-// log('Title:', forecast.getCurrentDescription())
-// log('City:', weather.getTown())
-// log('Date:', forecast.getCurrentDate())
-// log('Temperature:', forecast.getCurrentTemp())
-// log('Weather ico:', forecast.getCurrentIcon())
-// log('---------------RIGHT-BAR--------------------')
-// log('Feels like:', forecast.getCurrentFeelsLike())
-// log('Humidity:', forecast.getCurrentHumidity())
-// log('Chance of rain:', forecast.getCurrentChanceOfRain())
-// log('Wind speed:', forecast.getCurrentWindSpeed())
 
