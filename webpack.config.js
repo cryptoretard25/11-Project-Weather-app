@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
+  experiments: {
+    topLevelAwait: true,
+  },
   mode: "development",
   entry: {
     index: "./src/index.js",
@@ -14,8 +17,8 @@ module.exports = {
       template: "./src/template.html",
     }),
     new CopyWebpackPlugin({
-      patterns:[{from: './src/imgs', to: './imgs'}]
-    })
+      patterns: [{ from: "./src/imgs", to: "./imgs" }],
+    }),
   ],
   output: {
     filename: "[name].bundle.js",

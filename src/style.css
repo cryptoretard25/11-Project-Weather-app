@@ -6,7 +6,7 @@
 }
 
 :root{
-  font-size: 16px;
+  font-size: 14px;
 }
 
 *{
@@ -19,7 +19,7 @@
 }
 
 body{
- background-image: url("./imgs/background/background.jpg");
+ background-image: url("./imgs/background/background3.jpg");
  background-size: cover;
  background-position: center;
  background-repeat: no-repeat;
@@ -48,6 +48,9 @@ div.main-container{
 /*****************************************************************************************/
 /*UPPER BOX*/
 .upper-box{
+  border: 1px solid white;
+  padding: 20px 0 20px 40px;
+
   flex: 1;
   width: 85%;
 
@@ -57,7 +60,7 @@ div.main-container{
 /*****************************************************************************************/
 /*RIGHT*/
 .right.upper-bar{
-  width: 300px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -68,6 +71,7 @@ div.main-container{
 }
 #temperature{
   padding: 15px 0;
+  font-size: 4rem;
 }
 #convert-temp{
   border: none;
@@ -150,11 +154,14 @@ input[type=text]:focus{
 /*****************************************************************************************/
 /*LOWER BOX*/
 .lower-box{
+  border: 1px solid white;
+  padding: 20px 40px 40px 40px;
+
   width: 85%;
   height: 300px;
   display: flex;
   flex-direction: column;
-  gap: 20px
+  gap: 30px
 }
 .interface{
   display: flex;
@@ -203,11 +210,11 @@ input[type=text]:focus{
 .hide{
   display: none;
 }
-.daily-forecasts-block{
+.forecasts-block{
   display: flex;
   justify-content: space-between;
 }
-.daily-forecast{
+.daily-forecast, .hourly-forecast{
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -221,6 +228,16 @@ input[type=text]:focus{
   width: 50px;
   align-self: flex-end;
 }
+
 ::placeholder{
   color: white;
+}
+.hourly_time{
+  font-size: 1.5rem;
+}
+.hourly_temp{
+  font-size: 1.7rem;
+}
+.hourly_icon>img{
+  width: 50px;
 }
