@@ -1,13 +1,13 @@
 
-const { log } = console;
 //const apiKey = "20f7632ffc2c022654e4093c6947b4f4";
 const apiKey = '3069ae2718e40f8dc1998b7250e16f10'
 
+//Requesting current location if fetch fails use default value
 async function requestCurrentLocation(){
   try{
   const resolve = await fetch('https://ipapi.co/json/');
   if(!resolve.ok){
-    return 'ivanovo'
+    return 'dushanbe'
   }
   const result = await resolve.json();
   return result.city
@@ -28,7 +28,7 @@ async function requestWeather(city, units) {
 }
 
 // coords came from requestWeatherNow
-// units C or F
+// units 'imperial' or 'metric'
 async function requestForecast(input, units) {
   try {
     const coords = await getCoords(input);

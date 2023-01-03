@@ -1,35 +1,14 @@
 import "./style.css";
-import {
-  requestWeather,
-  requestForecast,
-  requestCurrentLocation,
-} from "./modules/api";
+import { requestWeather, requestForecast, requestCurrentLocation, } from "./modules/api";
 import { WeatherData, Forecast, state } from "./modules/classes";
-import {
-  loadDOM,
-  searchInput,
-  searchButton,
-  convertButton,
-  convertUnits,
-} from "./modules/upperdom";
-import {
-  dailyButton,
-  handle,
-  handleDots,
-  hourlyButton,
-  addDailyDOM,
-  addHourlyDOM,
-  dots,
-  leftArrow,
-  rightArrow,
-} from "./modules/lowerdom";
+import { loadDOM, searchInput, searchButton, convertButton, convertUnits, } from "./modules/upperdom";
+import { dailyButton, handle, handleDots, hourlyButton, addDailyDOM, addHourlyDOM, dots, leftArrow, rightArrow, } from "./modules/lowerdom";
 
 const { log } = console;
 log("Creating new project");
 
 searchInput.addEventListener("change", (e) => {
   state.input = e.target.value;
-  console.log(state.input);
 });
 
 searchButton.addEventListener("click", async () => {
@@ -59,19 +38,16 @@ convertButton.addEventListener("click", () => {
   } else {
     addHourlyDOM(state, state.index);
   }
-  log(state.forecast);
 });
 
 dailyButton.addEventListener("click", (e) => {
   const target = e.target;
   handle(target);
-  log("daily button clicked");
 });
 
 hourlyButton.addEventListener("click", (e) => {
   const target = e.target;
   handle(target);
-  log("hourly button clicked");
   addHourlyDOM(state, state.index);
 });
 
@@ -89,7 +65,6 @@ rightArrow.addEventListener("click", () => {
     state.index++;
     handleDots(state.index);
     addHourlyDOM(state, state.index);
-    log(state.index);
   } else return;
 });
 
@@ -98,7 +73,6 @@ leftArrow.addEventListener("click", () => {
     state.index--;
     handleDots(state.index);
     addHourlyDOM(state, state.index);
-    log(state.index);
   } else return;
 });
 

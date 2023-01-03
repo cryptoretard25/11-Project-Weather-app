@@ -160,7 +160,6 @@ function fillHourly(array){
         })
       }
     }
-
   })
   while(temp.length){
     result.push(temp.splice(0,8))
