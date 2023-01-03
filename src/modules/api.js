@@ -24,7 +24,7 @@ async function requestWeather(city, units) {
     );
     return await response.json();
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 }
 
@@ -39,7 +39,7 @@ async function requestForecast(input, units) {
     const result = await response.json();
     return result;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 }
 
