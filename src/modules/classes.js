@@ -8,6 +8,7 @@ const state = {
 
   daily: [],
   hourly: [],
+  index: 0,
 }
 
 class WeatherData {
