@@ -12,8 +12,8 @@ async function requestCurrentLocation(){
   const result = await resolve.json();
   return result.city
   }catch(err){
-    console.error(err)
-    return 'dushanbe'
+    console.log(err)
+    return 'dushanbe';
   }
 }
 

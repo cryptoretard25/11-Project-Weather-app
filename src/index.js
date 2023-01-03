@@ -27,6 +27,7 @@ searchButton.addEventListener("click", async () => {
   } else {
     addHourlyDOM(state, state.index);
   }
+  searchInput.value = '';
 });
 
 convertButton.addEventListener("click", () => {
