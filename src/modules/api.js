@@ -13,6 +13,7 @@ async function requestCurrentLocation(){
   return result.city
   }catch(err){
     console.error(err)
+    return 'dushanbe'
   }
 }
 
