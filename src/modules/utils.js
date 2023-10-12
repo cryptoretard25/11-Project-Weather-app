@@ -142,7 +142,7 @@ function convertDaily(array) {
 }
 
 function fillHourly(array) {
-  const arr = array.splice(0, 24);
+  const arr = array.slice(0, 24);
   const result = [];
   const temp = arr.map((item) => {
     return {

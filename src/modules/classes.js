@@ -52,6 +52,7 @@ class Forecast {
   }
 
   getCurrentChanceOfRain() {
+    console.log(this.forecast);
     return this.forecast.hourly[0].pop * 100;
   }
 
