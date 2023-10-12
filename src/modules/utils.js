@@ -36,8 +36,8 @@ function capitalize(string) {
 }
 
 function toDateTime(seconds, timezone) {
-  const t = new Date(1970, 0, 1);
-  t.setSeconds(seconds);
+  const t = new Date()
+  t.setTime(seconds*1000)
   return {
     date: t.toLocaleDateString("en-US", {
       timeZone: timezone,
@@ -96,99 +96,100 @@ function fillDaily(array) {
       minTemp: item.temp.min,
       icon: item.weather[0].icon,
       getDay: function () {
-        const date = new Date(1970, 0, 1);
-        date.setSeconds(this.dt);
+        const date = new Date();
+        date.setTime(this.dt * 1000);
         return date.toLocaleDateString("en-US", {
           weekday: "long",
-        })
+        });
       },
-      getDate: function(){
-        const date = new Date(1970, 0, 1);
-        date.setSeconds(this.dt)
-        return date.toLocaleDateString('en-US',{
-          day: 'numeric',
+      getDate: function () {
+        const date = new Date();
+        date.setTime(this.dt * 1000);
+        return date.toLocaleDateString("en-US", {
+          day: "numeric",
           month: "short",
-        })
-      }
+        });
+      },
     };
   });
 }
 
-function convertDaily(array){
-  return array.map((item)=>{
+function convertDaily(array) {
+  return array.map((item) => {
     return {
       dt: item.dt,
-      maxTemp: (()=>{
-        if(state.units === 'metric'){
-          return convertToF(item.maxTemp)
+      maxTemp: (() => {
+        if (state.units === "metric") {
+          return convertToF(item.maxTemp);
         }
-        if(state.units === 'imperial'){
-          return convertToC(item.maxTemp)
+        if (state.units === "imperial") {
+          return convertToC(item.maxTemp);
         }
       })(),
-      minTemp: (()=>{
-        if(state.units === 'metric'){
-          return convertToF(item.minTemp)
+      minTemp: (() => {
+        if (state.units === "metric") {
+          return convertToF(item.minTemp);
         }
-        if(state.units === 'imperial'){
-          return convertToC(item.minTemp)
+        if (state.units === "imperial") {
+          return convertToC(item.minTemp);
         }
       })(),
       icon: item.icon,
       getDay: item.getDay,
       getDate: item.getDate,
-    }
-  })
+    };
+  });
 }
 
-function fillHourly(array){
-  const arr = array.splice(0, 24)
+function fillHourly(array) {
+  const arr = array.splice(0, 24);
   const result = [];
-  const temp = arr.map(item=>{
+  const temp = arr.map((item) => {
     return {
       timezone: state.forecast.forecast.timezone,
       dt: item.dt,
       temp: item.temp,
       icon: item.weather[0].icon,
-      getHour: function(){
-        const date = new Date(1970, 0, 1)
-        date.setSeconds(this.dt);
-        return date.toLocaleTimeString("en-US",{
+      getHour: function () {
+        const date = new Date();
+        date.setTime(this.dt * 1000);
+        return date.toLocaleTimeString("en-US", {
           timeZone: this.timezone,
           hour12: true,
-          hour: 'numeric'
-        })
-      }
-    }
-  })
-  while(temp.length){
-    result.push(temp.splice(0,8))
+          hour: "numeric",
+        });
+      },
+    };
+  });
+  while (temp.length) {
+    result.push(temp.splice(0, 8));
   }
-  return result
+  return result;
 }
 
-function convertHourly(array){
+function convertHourly(array) {
   const temp = [];
-  for(let arr of array){
-    temp.push(arr.map((item)=>{
-      return {
-        timezone: item.timezone,
-        dt: item.dt,
-        temp: (()=>{
-          if(state.units === 'metric'){
-            return convertToF(item.temp)
-          }
-          if(state.units === 'imperial'){
-            return convertToC(item.temp)
-          }
-        })(),
-        icon: item.icon,
-        getHour: item.getHour,
-      }
-    }))
+  for (let arr of array) {
+    temp.push(
+      arr.map((item) => {
+        return {
+          timezone: item.timezone,
+          dt: item.dt,
+          temp: (() => {
+            if (state.units === "metric") {
+              return convertToF(item.temp);
+            }
+            if (state.units === "imperial") {
+              return convertToC(item.temp);
+            }
+          })(),
+          icon: item.icon,
+          getHour: item.getHour,
+        };
+      })
+    );
   }
   return temp;
- 
 }
 
 export {
@@ -207,5 +208,5 @@ export {
   fillDaily,
   convertDaily,
   fillHourly,
-  convertHourly
+  convertHourly,
 };
