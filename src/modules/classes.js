@@ -52,7 +52,7 @@ class Forecast {
   }
 
   getCurrentChanceOfRain() {
-    return this.forecast.daily[0].pop * 100;
+    return this.forecast.hourly[0].pop * 100;
   }
 
   getCurrentWindSpeed() {
